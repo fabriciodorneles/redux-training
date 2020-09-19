@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import api from '../services/api';
 import { IProduct } from '../store/modules/cart/types';
-
-// import { Container } from './styles';
+import CatalogItem from './catalogItem';
 
 const Catalog: React.FC = () => {
   const [catalog, setCatalog] = useState<IProduct[]>([]);
@@ -12,19 +10,15 @@ const Catalog: React.FC = () => {
     api.get('products').then(response => {
       setCatalog(response.data)
     })
-  }, [])
+  }, []);
 
-  console.log(catalog);
   return (
     <main>
       <h1>Catalog</h1>
 
       {catalog.map(product => (
-        <article key={product.id}>
-          <strong>{product.title} </strong> {" - "}
-          <span>{product.price} </span> {"   "}
-          <button type="button">Comprar</button>
-       </article>
+        
+        <CatalogItem key={product.id} product={product} />
       ))}
 
     </main>
